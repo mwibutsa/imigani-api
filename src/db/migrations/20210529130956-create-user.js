@@ -15,6 +15,7 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false,
       },
+      pictureURL: { type: Sequelize.STRING, defaultValue: '' },
       password: {
         type: Sequelize.STRING,
       },
@@ -31,6 +32,11 @@ module.exports = {
       middleName: {
         type: Sequelize.STRING,
       },
+      provider: {
+        type: Sequelize.STRING,
+        defaultValue: '',
+      },
+      providerId: { type: Sequelize.STRING, defaultValue: '' },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,

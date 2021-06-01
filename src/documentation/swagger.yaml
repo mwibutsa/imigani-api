@@ -1,0 +1,43 @@
+swagger: '2.0'
+info:
+  version: '0.0.1'
+  title: 'Imigani'
+host: localhost:3000
+basePath: /
+
+schemes:
+  - http
+  - https
+
+consumes:
+  - application/json
+produces:
+  - application/json
+paths:
+  /:
+    get:
+      description: Returns welcome to 'Imigani' API and shows A link to API documentation
+      responses:
+        '200':
+          description: Success
+          schema:
+            type: object
+            properties:
+              message:
+                type: 'string'
+                example: 'Welcome to Imigani API'
+              linkToAPIDocs:
+                type: 'string'
+                example: 'http://localhost:3000/api-docs/'
+  /api/auth/google:
+    get:
+      description: Authenticates the user with their google account
+      responses:
+        '200':
+          description: Success
+  /api/auth/facebook:
+    get:
+      description: Authenticates the user with their facebook account
+      responses:
+        '200':
+          description: Success
