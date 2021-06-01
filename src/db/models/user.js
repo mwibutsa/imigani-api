@@ -19,31 +19,14 @@ module.exports = (sequelize, DataTypes) => {
     {
       firstName: {
         type: DataTypes.STRING,
-        validate: {
-          len: [1, 50],
-          notEmpty: true,
-          isAlpha: {
-            args: [true],
-            msg: 'First name should only container letters',
-          },
-        },
       },
       lastName: {
         type: DataTypes.STRING,
-        validate: {
-          isAlpha: {
-            msg: 'Last name should only container letters',
-          },
-        },
       },
       middleName: {
         type: DataTypes.STRING,
-        validate: {
-          isAlpha: {
-            msg: 'Middle name should only container letters',
-          },
-        },
       },
+      pictureURL: { type: DataTypes.STRING, defaultValue: '' },
       password: {
         type: DataTypes.STRING,
         validate: {
@@ -63,43 +46,34 @@ module.exports = (sequelize, DataTypes) => {
       email: {
         type: DataTypes.STRING,
         unique: true,
-        validate: {
-          isEmail: {
-            msg: 'Please provide a valid email address',
-          },
-          notEmpty: false,
-          isRegisteringWithPhone(value) {
-            if (
-              (!this.phoneNumber || this.phoneNumber.length === 0) &&
-              value.length === 0
-            ) {
-              throw new Error(
-                'Please provide an email address or a phone number'
-              );
-            }
-          },
-        },
       },
       phoneNumber: {
         type: DataTypes.STRING,
         unique: true,
-        validate: {
-          isNumeric: {
-            msg: 'Please provide a valid phone number',
-          },
-        },
       },
       username: {
         type: DataTypes.STRING,
         unique: true,
+      },
+      providerId: {
+        type: DataTypes.STRING,
+        unique: true,
         validate: {
-          isEmpty: {
-            msg: 'Username can not be empty',
+          validation() {
+            if (this.provider?.length > 0 && this.providerId.length === 0) {
+              throw new Error('Provider ID can not be empty');
+            }
           },
-          isAlphanumeric: {
-            msg: 'Please provide a valid username',
+        },
+      },
+      provider: {
+        type: DataTypes.STRING,
+        validate: {
+          validation() {
+            if (this.providerId.length > 0 && this.provider.length === 0) {
+              throw new Error('Provider can not be empty');
+            }
           },
-          len: [5, 30],
         },
       },
     },
@@ -108,5 +82,12 @@ module.exports = (sequelize, DataTypes) => {
       modelName: 'User',
     }
   );
+
+  User.createUser = (userData) => User.create(userData);
+  User.getUserByProviderId = (id, provider) =>
+    User.findOne({
+      where: { providerId: id, provider },
+    });
+
   return User;
 };
