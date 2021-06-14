@@ -18,7 +18,7 @@
     "migrate:reset": "npx sequelize-cli db:migrate:undo:all && npm run migrate",
     "pretest": "cross-env NODE_ENV=test npx sequelize db:drop && cross-env NODE_ENV=test npx sequelize db:create && cross-env NODE_ENV=test npm run migrate:reset",
     "db:reset": "npx sequelize db:drop && npx sequelize db:create && npm run migrate:reset",
-    "test": "cross-env NODE_ENV=test jest ./tests --detectOpenHandles --passWithNoTests",
+    "test": "cross-env NODE_ENV=test jest ./tests --passWithNoTests",
     "test:nyc": "nyc cross-env NODE_ENV=test jest ./tests --detectOpenHandles --passWithNoTests",
     "cov:report": "nyc report --reporter=text-lcov | coveralls",
     "prepare": "husky install"
@@ -29,6 +29,7 @@
     "cors": "^2.8.5",
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
+    "joi": "^17.4.0",
     "jsonwebtoken": "^8.5.1",
     "passport": "^0.4.1",
     "passport-facebook": "^3.0.0",

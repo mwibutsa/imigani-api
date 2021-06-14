@@ -84,6 +84,10 @@ module.exports = (sequelize, DataTypes) => {
   );
 
   User.createUser = (userData) => User.create(userData);
+  User.getOneUser = (pk) =>
+    User.findByPk(pk, {
+      attributes: { exclude: ['password'] },
+    });
   User.getUserByProviderId = (id, provider) =>
     User.findOne({
       where: { providerId: id, provider },
